@@ -1,0 +1,22 @@
+{
+  "name": "any-store",
+  "version": "0.0.1",
+  "description": "Prototypes for any kind of store, ie mongo, memory etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/codeofnode/any-store.git"
+  },
+  "keywords": [
+    "mongo",
+    "memory",
+    "store",
+    "db",
+    "prototype"
+  ],
+  "author": "Ramesh Kumar <codeofnode@gmail.com>",
+  "license": "Apache-2.0"
+}

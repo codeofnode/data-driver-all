@@ -1,0 +1,15 @@
+{
+  "type": "unit",
+  "testsuite": "Store should",
+  "tests" : [
+    {
+      "summary": "return instance",
+      "request": {
+        "method": "getIns"
+      },
+      "assertions": {
+        "TYPEOF<output.data": "object"
+      }
+    }
+  ]
+}
