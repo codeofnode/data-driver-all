@@ -1,14 +1,14 @@
 {
-  "name": "any-store",
+  "name": "data-driver-all",
   "version": "0.0.1",
-  "description": "Prototypes for any kind of store, ie mongo, memory etc",
+  "description": "Prototypes for all kind of data store, ie mongo, memory etc",
   "main": "index.js",
   "scripts": {
     "test": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/codeofnode/any-store.git"
+    "url": "git@github.com/codeofnode/data-driver-all.git"
   },
   "keywords": [
     "mongo",
