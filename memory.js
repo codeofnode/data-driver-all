@@ -22,6 +22,8 @@ class MemoryStore extends BaseStore {
     super(config)
     /** @member {Object} */
     this.data = {}
+    /** @member {boolean} */
+    this.ready = true
     this.dataObjects = {}
     this.dataIndexes = {}
   }
@@ -173,8 +175,8 @@ class MemoryStore extends BaseStore {
     if (typeof filter !== 'object') {
       return this.dataObjects[coll][filter]
     }
-    if (Object.hasOwnProperty.call(filter, 'id')) {
-      return this.dataObjects[coll][filter.id]
+    if (Object.hasOwnProperty.call(filter, '_id')) {
+      return this.dataObjects[coll][filter._id]
     }
     const kyl = Object.keys(filter)
     const kys = kyl.join(MemoryStore.INDEX_SPLITTER)
@@ -201,14 +203,14 @@ class MemoryStore extends BaseStore {
       Object.assign(this.data[coll][ind], data)
       return id
     }
-    data.id = MemoryStore.genId()
-    this.dataObjects[coll][data.id] = this.data[coll].length
+    data._id = MemoryStore.genId()
+    this.dataObjects[coll][data._id] = this.data[coll].length
     Object.keys(this.dataIndexes[coll]).forEach((ky) => {
       const sps = ky.split(MemoryStore.INDEX_SPLITTER).map(k => data[k]).join(MemoryStore.INDEX_SPLITTER)
-      this.dataIndexes[coll][ky][sps] = this.dataObjects[coll][data.id]
+      this.dataIndexes[coll][ky][sps] = this.dataObjects[coll][data._id]
     })
     this.data[coll].push(data)
-    return data.id
+    return data._id
   }
 
   /**
@@ -236,12 +238,12 @@ class MemoryStore extends BaseStore {
    * @param {string} coll - the new collection, that should be created
    * @return {Collection} return collection instance
    */
-  mkcoll (coll, indexes) {
+  mkcoll (coll, indexes = []) {
     const collection = new Collection(this, coll)
     this.data[coll] = []
     this.dataObjects[coll] = {}
     this.dataIndexes[coll] = {}
-    indexes.forEach((ind) => {
+    indexes || [].forEach((ind) => {
       this.dataIndexes[coll][Object.keys(ind).join(MemoryStore.INDEX_SPLITTER)] = {}
     })
     return collection

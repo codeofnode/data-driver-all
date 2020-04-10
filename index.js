@@ -1,4 +1,5 @@
 const MemoryStore = require('./memory')
+const MongoStore = require('./mongo')
 
 /**
  * @module store
@@ -18,8 +19,8 @@ class Store {
      * @static
      * @member {Object} */
     Store.Types = {
-      MEMORY: MemoryStore
-      // MONGO: require('./mongo')
+      MEMORY: MemoryStore,
+      MONGO: MongoStore
     }
     /** the store configs
      * @static
@@ -45,16 +46,32 @@ class Store {
    */
   static getIns (dType) {
     dType = dType || Store.defaultType
-    if (!Object.hasOwnProperty.call(Store.Configs, dType) || !Object.hasOwnProperty.call(Store.Types, dType)) {
+    if (!Object.prototype.hasOwnProperty.call(Store.Types, dType)) {
       throw new Error('DB Type not supported.')
     }
-    if (Object.hasOwnProperty.call(Store.Instances, dType)) {
+    if (Object.prototype.hasOwnProperty.call(Store.Instances, dType)) {
       return Store.Instances[dType]
     }
-    const ins = new Store.Types[dType](Store.Configs[dType])
+    const ins = new Store.Types[dType](Store.Configs[dType] || {})
     Store.Instances[dType] = ins
     return ins
   }
+
+  /**
+   * is instances ready
+   * @return {boolean} - whether all ready or not
+   */
+  static isReady () {
+    const instances = Object.keys(Store.Instances)
+    const l = instances.length
+    for (let k = 0; k < l; k++) {
+      if (!Store.Instances[instances[k]].ready) {
+        return false
+      }
+    }
+    return true
+  }
 }
 
+Store.waitFor = MongoStore.waitFor
 module.exports = Store

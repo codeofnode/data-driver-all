@@ -39,6 +39,16 @@ class Collection {
   }
 
   /*
+   * Save or update record to database
+   * @param {object[]} arr - the array of records
+   * @param {Object} options - the options to save multiple records
+   * @returns {EntityId} return record id, if saved
+   */
+  multiInsert (arr, options = {}) {
+    return Promise.all(arr.map(d => this.save(d._id, d)))
+  }
+
+  /*
    * delete record from database
    * @param {EntityId} [id] - the doc id at which, that should be created/updated
    * @return {Promise} promise - return a promise
