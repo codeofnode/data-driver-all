@@ -1,6 +1,6 @@
 {
   "name": "data-driver-all",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Prototypes for all kind of data store, ie mongo, memory etc",
   "main": "index.js",
   "scripts": {
